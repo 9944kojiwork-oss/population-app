@@ -218,36 +218,3 @@ if st.button(f"{prefecture}の2021年を予測する"):
         "元データが千人単位のため、概算です。"
     )
 
-st.subheader("モデルの評価")
-
-st.write(
-    "予測対象が2017年までのデータで学習し、"
-    "2018～2020年のデータで評価しました。"
-    "数値は47都道府県を合わせた平均です。"
-)
-
-evaluation = pd.DataFrame({
-    "予測方法": [
-        "機械学習（Ridge回帰）",
-        "前年と同じ増減率とする方法",
-    ],
-    "平均絶対誤差（ポイント）": [
-        model_error,
-        baseline_error,
-    ],
-})
-
-st.dataframe(evaluation, hide_index=True)
-
-st.caption(
-    "誤差は小さいほど良好です。例えば実績−0.5％に対して"
-    "予測−0.7％なら、誤差は0.2ポイントです。"
-)
-
-if model_error < baseline_error:
-    st.write("今回の評価では、機械学習の方が誤差が小さくなりました。")
-else:
-    st.write(
-        "今回の評価では、機械学習は単純な予測方法を"
-        "上回りませんでした。これもモデル評価の重要な結果です。"
-    )
